@@ -1,0 +1,59 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /rm
+
+logging:
+  level:
+    '[com.shell]': debug
+    '[org.mybatis.spring]': debug
+    '[com.baomidou.mybatisplus.core.MybatisConfiguration]': debug
+    '[com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean]': debug
+
+spring:
+  application:
+    name: rm
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://120.27.150.46:3306/biz_rm?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+
+mybatis:
+  #  实体类别名包扫描
+  type-aliases-package: com.shell.persistence.po
+
+# mybatis-plus相关配置
+mybatis-plus:
+  # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  mapper-locations: classpath*:**/*Mapper.xml
+  type-handlers-package: com.shell.core.mybatis.type.postgresql
+  # 以下配置均有默认值,可以不设置
+  global-config:
+    db-config:
+      #主键类型 AUTO:"数据库ID自增" INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: input
+      #字段策略 IGNORED:"忽略判断"  NOT_NULL:"非 NULL 判断")  NOT_EMPTY:"非空判断"
+      field-strategy: NOT_EMPTY
+      #数据库类型
+      db-type: mysql
+      logic-delete-field: deleted # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: true # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: false # 逻辑未删除值(默认为 0)
+    banner: true
+  configuration:
+    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+    map-underscore-to-camel-case: true
+    # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+    call-setters-on-nulls: true
+    cache-enabled: false
+    use-generated-keys: false
+    default-executor-type: reuse
+    default-statement-timeout: 30
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    oauth:
+      app-name: shell-rm

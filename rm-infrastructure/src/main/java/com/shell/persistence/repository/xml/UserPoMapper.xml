@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.shell.persistence.repository.UserPoMapper">
+
+    <resultMap id="UserResultMap" type="com.shell.persistence.po.UserPo">
+        <result column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="pwd" property="pwd" />
+        <result column="age" property="age" />
+        <result column="sex" property="sex" />
+    </resultMap>
+
+    <sql id="user">
+        id,
+        username,
+        pwd,
+        age,
+        sex
+    </sql>
+
+    <select id="getUserLnk" resultType="java.util.Map">
+        select * from rm_user ru
+        <trim prefix="where" prefixOverrides="and">
+            <if test="ew != null and ew.sqlSegment != null">
+                ${ew.sqlSegment}
+            </if>
+        </trim>
+    </select>
+
+</mapper>
